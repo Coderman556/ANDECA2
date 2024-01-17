@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageView backgroundImageView = findViewById(R.id.backgroundImageView);
-        backgroundImageView.setImageResource(R.drawable.background); // Replace with your image resource
+        backgroundImageView.setImageResource(R.drawable.homepagegradient); // Replace with your image resource
 
         TextView greetingTextView = findViewById(R.id.greetingTextView);
 
