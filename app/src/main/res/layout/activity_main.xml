@@ -34,19 +34,56 @@
             android:textSize="26sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
+            android:layout_marginLeft="22dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
+
+        <FrameLayout
+            android:id="@+id/flFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        />
     </LinearLayout>
-    <FrameLayout
-        android:id="@+id/flFragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+
+    <ImageButton
+        android:id="@+id/profileImageButton"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/image_button_background"
+        android:src="@drawable/ic_baseline_account_circle_24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+
+    <ImageButton
+        android:id="@+id/settingImageButton"
+        android:layout_width="34dp"
+        android:layout_height="34dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileImageButton"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/image_button_background"
+        android:src="@drawable/ic_baseline_settings_24"
+        />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/searchView"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settingImageButton"
+        android:queryHint="Search"
+        app:theme="@style/SearchViewStyle"
+        android:background="@drawable/rounded_search_view"
+        app:iconifiedByDefault="false" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
