@@ -4,4 +4,5 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
     </style>
+    <style name="noActionBar" parent="Theme.AppCompat.Light.NoActionBar" />
 </resources>
