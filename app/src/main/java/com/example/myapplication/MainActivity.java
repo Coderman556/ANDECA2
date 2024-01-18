@@ -13,7 +13,7 @@ import java.util.Calendar;
 import androidx.appcompat.widget.SearchView;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -49,5 +49,5 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-}
 
+}
