@@ -12,6 +12,4 @@ public class FinanceHomepage extends AppCompatActivity {
         setContentView(R.layout.activity_finance_homepage);
     }
 
-
-
 }
