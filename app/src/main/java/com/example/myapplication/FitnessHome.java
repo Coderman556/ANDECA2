@@ -4,12 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class FinanceHomepage extends AppCompatActivity {
+public class FitnessHome extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finance_homepage);
+        setContentView(R.layout.activity_fitness_home);
     }
-
 }
