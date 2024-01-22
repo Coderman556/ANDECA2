@@ -1,9 +1,12 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +14,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 import androidx.appcompat.widget.SearchView;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -22,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         ImageView backgroundImageView = findViewById(R.id.backgroundImageView);
-        backgroundImageView.setImageResource(R.drawable.homepagegradient); // Replace with your image resource
+        backgroundImageView.setImageResource(R.drawable.homepagegradient);
 
         TextView greetingTextView = findViewById(R.id.greetingTextView);
 
@@ -40,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
         SearchView searchView = findViewById(R.id.searchView);
 
-        // Set OnClickListener for the entire SearchView
+        //OnClickListener for the searchbar
         searchView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,6 +53,28 @@ public class MainActivity extends AppCompatActivity {
                 // You can open a search activity, show suggestions, etc.
             }
         });
+
+//onClickLister for closing/opening tips section
+        ImageView closeButton = findViewById(R.id.closeButton);
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                View tipsLayout = findViewById(R.id.dailyTipsLayout);
+                ImageView closeButtonImage = (ImageView) v;
+
+                if (tipsLayout.getVisibility() == View.VISIBLE) {
+                    tipsLayout.setVisibility(View.GONE);
+                    // Change the image to the 'open' state
+                    closeButtonImage.setImageResource(R.drawable.ic_baseline_add_24);
+                } else {
+                    tipsLayout.setVisibility(View.VISIBLE);
+                    // Change the image to the 'close' state
+                    closeButtonImage.setImageResource(R.drawable.ic_baseline_close_24);
+                }
+            }
+        });
+        BottomNavigationHelper.setupBottomNavigation(this, R.id.home);
+
     }
 }
 
