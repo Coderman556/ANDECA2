@@ -43,6 +43,102 @@ public class DBHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public long addFinanceTransaction(FinanceTransaction transaction) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put(TRANSACTION_CATEGORY, transaction.getCategory());
+        values.put(TRANSACTION_DESCRIPTION, transaction.getDescription());
+        values.put(TRANSACTION_PRICE, transaction.getPrice());
+
+        long newRowId = db.insert(TABLE_TRANSACTIONS, null, values);
+        db.close();
+
+        return newRowId; // Returns the ID of the newly inserted row, or -1 on error.
+    }
+
+    public FinanceTransaction getFinanceTransaction(int transactionId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        FinanceTransaction transaction = null;
+
+        Cursor cursor = db.query(
+                TABLE_TRANSACTIONS,
+                null,
+                TRANSACTION_ID + "=?",
+                new String[] { String.valueOf(transactionId) },
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                int id = cursor.getInt(cursor.getColumnIndex(TRANSACTION_ID));
+                String category = cursor.getString(cursor.getColumnIndex(TRANSACTION_CATEGORY));
+                String description = cursor.getString(cursor.getColumnIndex(TRANSACTION_DESCRIPTION));
+                double price = cursor.getDouble(cursor.getColumnIndex(TRANSACTION_PRICE));
+
+                transaction = new FinanceTransaction(category, description, price, id);
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return transaction;
+    }
+
+    public List<FinanceTransaction> getAllFinanceTransactions() {
+        List<FinanceTransaction> transactionsList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_TRANSACTIONS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    int id = cursor.getInt(cursor.getColumnIndex(TRANSACTION_ID));
+                    String category = cursor.getString(cursor.getColumnIndex(TRANSACTION_CATEGORY));
+                    String description = cursor.getString(cursor.getColumnIndex(TRANSACTION_DESCRIPTION));
+                    double price = cursor.getDouble(cursor.getColumnIndex(TRANSACTION_PRICE));
+
+                    FinanceTransaction transaction = new FinanceTransaction(category, description, price, id);
+
+                    transactionsList.add(transaction);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return transactionsList;
+    }
+
+
+
+    public int updateFinanceTransaction(FinanceTransaction transaction) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(TRANSACTION_CATEGORY, transaction.getCategory());
+        values.put(TRANSACTION_DESCRIPTION, transaction.getDescription());
+        values.put(TRANSACTION_PRICE, transaction.getPrice());
+
+        return db.update(
+                TABLE_TRANSACTIONS,
+                values,
+                TRANSACTION_ID + " = ?",
+                new String[] { String.valueOf(transaction.getId()) }
+        );
+    }
+    public void deleteFinanceTransaction(int transactionId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(
+                TABLE_TRANSACTIONS,
+                TRANSACTION_ID + " = ?",
+                new String[] { String.valueOf(transactionId) }
+        );
+        db.close();
+    }
 
 }
