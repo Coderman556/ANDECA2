@@ -13,6 +13,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -36,6 +38,17 @@ public class Notes extends AppCompatActivity {
                 // You can open a search activity, show suggestions, etc.
             }
         });
+
+        // Inside your activity or fragment
+        RecyclerView recentRecyclerView = findViewById(R.id.recentRecyclerView);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recentRecyclerView.setLayoutManager(layoutManager);
+
+// Set up your RecyclerView adapter and populate data accordingly
+        RecentAdapter adapter = new RecentAdapter(/* pass your data here */);
+        recentRecyclerView.setAdapter(adapter);
+
 
         BottomNavigationHelper.setupBottomNavigation(this, R.id.notes);
 
