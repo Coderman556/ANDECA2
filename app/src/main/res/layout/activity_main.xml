@@ -13,7 +13,6 @@
         android:scaleType="centerCrop"
         android:src="@drawable/homepagegradient"
     />
-
     <LinearLayout
         android:layout_width="409dp"
         android:layout_height="729dp"
@@ -47,6 +46,7 @@
         />
     </LinearLayout>
 
+
     <ImageButton
         android:id="@+id/profileImageButton"
         android:layout_width="34dp"
@@ -74,7 +74,7 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
-        android:layout_width="360dp"
+        android:layout_width="370dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -84,6 +84,102 @@
         app:theme="@style/SearchViewStyle"
         android:background="@drawable/rounded_search_view"
         app:iconifiedByDefault="false" />
+
+<!--layout for entire tips section-->
+    <LinearLayout
+        android:id="@+id/tipsSectionLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/searchView">
+
+        <!-- Linear layout for section title and close button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:paddingEnd="8dp">
+
+            <!-- Title -->
+            <TextView
+                android:id="@+id/tipsTitleTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tips"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="start" />
+            <!-- Close button -->
+            <ImageView
+                android:id="@+id/closeButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_close_24"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginLeft="301dp"
+                android:clickable="true"
+                android:focusable="true" />
+        </LinearLayout>
+
+<!--Content inside the tips section-->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/dailyTipsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            app:layout_constraintTop_toBottomOf="@+id/tipsTitleTextView"
+            app:layout_constraintBottom_toBottomOf="@+id/tipsSectionLayout">
+
+            <ImageView
+                android:id="@+id/dailyTipsImageView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/dailytips_coffee"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="8dp"/>
+
+            <TextView
+                android:id="@+id/dailyTipsTitleTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Make Better Coffee"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@+id/dailyTipsImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/dailyTipsTipTextView"/>
+
+
+            <TextView
+                android:id="@+id/dailyTipsTipTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="1.Use higher quality beans\n 2.Ensure your water is at the perfect temperature\n 3.Thoroughly stir your coffee"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:gravity="center"
+                app:layout_constraintStart_toEndOf="@+id/dailyTipsImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dailyTipsTitleTextView"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
