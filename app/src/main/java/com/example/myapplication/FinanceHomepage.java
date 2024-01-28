@@ -3,6 +3,7 @@ package com.example.myapplication;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class FinanceHomepage extends AppCompatActivity {
+public class FinanceHomepage extends AppCompatActivity implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,25 @@ public class FinanceHomepage extends AppCompatActivity {
                 title.setText(snb.getGoalPeriod() + " " + snb.getGoalType());
             }
         }
+        BottomNavigationHelper.setupBottomNavigation(this, R.id.finance);
     }
 
+    @Override
+    public void onClick(View v) {
+        int id = v.getId();
+
+        if (id == R.id.button_budget_goal) {
+          Intent i = new Intent(this, FinanceSnB.class);
+          i.putExtra("DataToView", "budget");
+          startActivity(i);
+        } else if (id == R.id.button_savings_goal) {
+            Intent i = new Intent(this, FinanceSnB.class);
+            i.putExtra("DataToView", "saving");
+            startActivity(i);
+        } else if (id == R.id.btnLogExpense) {
+//            TODO: Create log expense activity
+//            Intent i = new Intent(this, );
+//            startActivity(i);
+        }
+    }
 }

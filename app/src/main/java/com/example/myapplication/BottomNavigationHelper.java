@@ -51,7 +51,9 @@ public class BottomNavigationHelper {
 
             case R.id.finance:
                 // Handle the Finance icon click
-
+                activity.startActivity(new Intent(activity, FinanceHomepage.class));
+                activity.overridePendingTransition(0, 0);
+                activity.finish();
                 break;
         }
     }

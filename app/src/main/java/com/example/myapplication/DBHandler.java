@@ -20,6 +20,8 @@ public class DBHandler extends SQLiteOpenHelper {
     private static final String TRANSACTION_PRICE = "trans_price";
     private static final String TRANSACTION_DESCRIPTION = "trans_description";
 
+//    Caused by: android.database.sqlite.SQLiteException: no such column: snb_type (code 1 SQLITE_ERROR): , while compiling: CREATE TABLE
+//    savings_and_budgets(snb_typeTEXT,snb_periodTEXT,snb_amountREAL,PRIMARY KEY (snb_type, snb_period));
     private static final String TABLE_SAVINGSANDBUDGETS = "savings_and_budgets";
     private static final String SNB_GOALTYPE = "snb_type";
     private static final String SNB_GOALPERIOD = "snb_period";
@@ -38,18 +40,12 @@ public class DBHandler extends SQLiteOpenHelper {
                 + TRANSACTION_ID + " INTEGER PRIMARY KEY," + TRANSACTION_CATEGORY + " TEXT,"
                 + TRANSACTION_PRICE + " REAL" + TRANSACTION_DESCRIPTION + "TEXT" + ")"
         );
-//        CREATE TABLE something (
-//                column1,
-//                column2,
-//                column3,
-//                PRIMARY KEY (column1, column2)
-//        );
         db.execSQL(
                 "CREATE TABLE " + TABLE_SAVINGSANDBUDGETS + "("
-                + SNB_GOALTYPE + "TEXT," + SNB_GOALPERIOD + "TEXT,"
-                + SNB_GOALAMOUNT + "REAL," + "PRIMARY KEY ("
+                + SNB_GOALTYPE + " TEXT," + SNB_GOALPERIOD + " TEXT,"
+                + SNB_GOALAMOUNT + " REAL," + "PRIMARY KEY ("
                 + SNB_GOALTYPE + ", " + SNB_GOALPERIOD + ")" + ");"
-                );
+        );
     }
 
     // Upgrading database
@@ -227,6 +223,7 @@ public class DBHandler extends SQLiteOpenHelper {
                 new String[] { String.valueOf(transaction.getId()) }
         );
     }
+
     public void deleteFinanceTransaction(int transactionId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(
