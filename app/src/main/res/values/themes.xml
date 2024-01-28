@@ -23,5 +23,9 @@
         <!-- Customize the text color of the search input -->
         <item name="android:textColor">@android:color/black</item>
     </style>
+    <style name="TransparentSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
 </resources>
