@@ -13,11 +13,7 @@ public class FinanceTransaction {
         this.id = id;
     }
 
-    public FinanceTransaction(String cat, String desc, double price) {
-        this.category = cat;
-        this.description = desc;
-        this.price = price;
-    }
+    public FinanceTransaction(){}
 
     public String getCategory() {
         return category;

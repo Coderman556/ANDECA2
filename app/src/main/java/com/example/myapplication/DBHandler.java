@@ -13,11 +13,17 @@ import java.util.List;
 public class DBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "TriCoderDB";
+
     private static final String TABLE_TRANSACTIONS = "transactions";
     private static final String TRANSACTION_ID = "trans_id";
     private static final String TRANSACTION_CATEGORY = "trans_category";
     private static final String TRANSACTION_PRICE = "trans_price";
     private static final String TRANSACTION_DESCRIPTION = "trans_description";
+
+    private static final String TABLE_SAVINGSANDBUDGETS = "savings_and_budgets";
+    private static final String SNB_GOALTYPE = "snb_type";
+    private static final String SNB_GOALPERIOD = "snb_period";
+    private static final String SNB_GOALAMOUNT = "snb_amount";
 
     public DBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -27,10 +33,23 @@ public class DBHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_TRANSACTIONS + "("
+        db.execSQL(
+                "CREATE TABLE " + TABLE_TRANSACTIONS + "("
                 + TRANSACTION_ID + " INTEGER PRIMARY KEY," + TRANSACTION_CATEGORY + " TEXT,"
-                + TRANSACTION_PRICE + " REAL" + TRANSACTION_DESCRIPTION + "TEXT" + ")";
-        db.execSQL(CREATE_CONTACTS_TABLE);
+                + TRANSACTION_PRICE + " REAL" + TRANSACTION_DESCRIPTION + "TEXT" + ")"
+        );
+//        CREATE TABLE something (
+//                column1,
+//                column2,
+//                column3,
+//                PRIMARY KEY (column1, column2)
+//        );
+        db.execSQL(
+                "CREATE TABLE " + TABLE_SAVINGSANDBUDGETS + "("
+                + SNB_GOALTYPE + "TEXT," + SNB_GOALPERIOD + "TEXT,"
+                + SNB_GOALAMOUNT + "REAL," + "PRIMARY KEY ("
+                + SNB_GOALTYPE + ", " + SNB_GOALPERIOD + ")" + ");"
+                );
     }
 
     // Upgrading database
@@ -38,9 +57,76 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_TRANSACTIONS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_SAVINGSANDBUDGETS);
 
         // Create tables again
         onCreate(db);
+    }
+
+    public long addSnB(FinanceSnB snb) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(SNB_GOALTYPE, snb.getGoalType());
+        values.put(SNB_GOALPERIOD, snb.getGoalPeriod());
+        values.put(SNB_GOALAMOUNT, snb.getGoalAmount());
+
+        long newRowId = db.insert(TABLE_SAVINGSANDBUDGETS, null, values);
+        db.close();
+
+        return newRowId;
+    }
+
+    public List<FinanceSnB> getDisplayableSnB(){
+        List<FinanceSnB> SnBList = new ArrayList<>();
+
+        String selectQuery = "SELECT * FROM ( SELECT " + TABLE_SAVINGSANDBUDGETS + ".*, CASE " + SNB_GOALPERIOD
+                + " WHEN 'daily' THEN 1 WHEN 'weekly' THEN 2 WHEN 'monthly' THEN 3 ELSE 4 END as periodOrder FROM "
+                + TABLE_SAVINGSANDBUDGETS + " WHERE " + SNB_GOALAMOUNT + " <> 0 ) GROUP BY " + SNB_GOALTYPE
+                + " ORDER BY periodOrder";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    FinanceSnB SnB = new FinanceSnB();
+
+                    SnB.setGoalType(cursor.getString(0));
+                    SnB.setGoalPeriod(cursor.getString(1));
+                    SnB.setGoalAmount(Double.parseDouble(cursor.getString(2)));
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return SnBList;
+    }
+
+    public List<FinanceSnB> getAllSnB(){
+        List<FinanceSnB> SnBList = new ArrayList<>();
+        String selectQuery = "SELECT * FROM " + TABLE_SAVINGSANDBUDGETS;
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                do {
+                    FinanceSnB SnB = new FinanceSnB();
+
+                    SnB.setGoalType(cursor.getString(0));
+                    SnB.setGoalPeriod(cursor.getString(1));
+                    SnB.setGoalAmount(Double.parseDouble(cursor.getString(2)));
+
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        }
+
+        db.close();
+        return SnBList;
     }
 
     public long addFinanceTransaction(FinanceTransaction transaction) {
@@ -54,7 +140,7 @@ public class DBHandler extends SQLiteOpenHelper {
         long newRowId = db.insert(TABLE_TRANSACTIONS, null, values);
         db.close();
 
-        return newRowId; // Returns the ID of the newly inserted row, or -1 on error.
+        return newRowId;
     }
 
     public FinanceTransaction getFinanceTransaction(int transactionId) {
@@ -63,28 +149,27 @@ public class DBHandler extends SQLiteOpenHelper {
 
         Cursor cursor = db.query(
                 TABLE_TRANSACTIONS,
-                null,
+                new String[] {
+                        TRANSACTION_ID,
+                        TRANSACTION_CATEGORY,
+                        TRANSACTION_PRICE,
+                        TRANSACTION_DESCRIPTION
+                },
                 TRANSACTION_ID + "=?",
-                new String[] { String.valueOf(transactionId) },
+                new String[] {
+                        String.valueOf(transactionId)
+                },
                 null,
                 null,
-                null
-        );
+                null,
+                null);
 
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                int id = cursor.getInt(cursor.getColumnIndex(TRANSACTION_ID));
-                String category = cursor.getString(cursor.getColumnIndex(TRANSACTION_CATEGORY));
-                String description = cursor.getString(cursor.getColumnIndex(TRANSACTION_DESCRIPTION));
-                double price = cursor.getDouble(cursor.getColumnIndex(TRANSACTION_PRICE));
+        if (cursor != null)
+            cursor.moveToFirst();
+//        public FinanceTransaction(String cat, String desc, double price, int id) {
+        FinanceTransaction txn = new FinanceTransaction(cursor.getString(1), cursor.getString(3), Double.parseDouble(cursor.getString(2)), Integer.parseInt(cursor.getString(0)));
 
-                transaction = new FinanceTransaction(category, description, price, id);
-            }
-            cursor.close();
-        }
-
-        db.close();
-        return transaction;
+        return txn;
     }
 
     public List<FinanceTransaction> getAllFinanceTransactions() {
@@ -97,12 +182,14 @@ public class DBHandler extends SQLiteOpenHelper {
         if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
-                    int id = cursor.getInt(cursor.getColumnIndex(TRANSACTION_ID));
-                    String category = cursor.getString(cursor.getColumnIndex(TRANSACTION_CATEGORY));
-                    String description = cursor.getString(cursor.getColumnIndex(TRANSACTION_DESCRIPTION));
-                    double price = cursor.getDouble(cursor.getColumnIndex(TRANSACTION_PRICE));
 
-                    FinanceTransaction transaction = new FinanceTransaction(category, description, price, id);
+                    FinanceTransaction transaction = new FinanceTransaction();
+
+                    transaction.setId(Integer.parseInt(cursor.getString(0)));
+                    transaction.setCategory(cursor.getString(1));
+                    transaction.setPrice(Double.parseDouble(cursor.getString(2)));
+                    transaction.setDescription(cursor.getString(3));
+
 
                     transactionsList.add(transaction);
                 } while (cursor.moveToNext());
@@ -113,8 +200,6 @@ public class DBHandler extends SQLiteOpenHelper {
         db.close();
         return transactionsList;
     }
-
-
 
     public int updateFinanceTransaction(FinanceTransaction transaction) {
         SQLiteDatabase db = this.getWritableDatabase();
