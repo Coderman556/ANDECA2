@@ -80,10 +80,21 @@ public class DBHandler extends SQLiteOpenHelper {
     public List<FinanceSnB> getDisplayableSnB(){
         List<FinanceSnB> SnBList = new ArrayList<>();
 
-        String selectQuery = "SELECT * FROM ( SELECT " + TABLE_SAVINGSANDBUDGETS + ".*, CASE " + SNB_GOALPERIOD
-                + " WHEN 'daily' THEN 1 WHEN 'weekly' THEN 2 WHEN 'monthly' THEN 3 ELSE 4 END as periodOrder FROM "
-                + TABLE_SAVINGSANDBUDGETS + " WHERE " + SNB_GOALAMOUNT + " <> 0 ) GROUP BY " + SNB_GOALTYPE
-                + " ORDER BY periodOrder";
+        String selectQuery = "SELECT " + SNB_GOALTYPE + ", MIN(periodOrder) as MinPeriodOrder "
+                + "FROM ( "
+                + "SELECT "
+                + TABLE_SAVINGSANDBUDGETS + "." + SNB_GOALTYPE + ", "
+                + "CASE " + SNB_GOALPERIOD + " "
+                + "WHEN 'daily' THEN 1 "
+                + "WHEN 'weekly' THEN 2 "
+                + "WHEN 'monthly' THEN 3 "
+                + "ELSE 4 "
+                + "END as periodOrder "
+                + "FROM " + TABLE_SAVINGSANDBUDGETS + " "
+                + "WHERE " + SNB_GOALAMOUNT + " <> 0 "
+                + ") AS orderedSavings "
+                + "GROUP BY " + SNB_GOALTYPE + " "
+                + "ORDER BY MinPeriodOrder;";
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);

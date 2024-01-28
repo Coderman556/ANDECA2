@@ -44,19 +44,20 @@
             </androidx.cardview.widget.CardView>
 
             <Button
-                android:id="@+id/btnLogExpense2"
+                android:id="@+id/btnLogExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Log Expense" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvDailyBudget"
+                android:id="@+id/cvBudget"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginVertical="16dp">
+                android:layout_marginVertical="16dp"
+                android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/txtDailyBudget"
+                    android:id="@+id/txtBudget"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="60dp"
@@ -66,14 +67,32 @@
                     android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvWeeklySavings"
+            <Button
+                android:id="@+id/button_budget_goal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="16dp">
+                android:visibility="visible"
+                android:text="Add Budget Goal"
+                android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
+                android:textStyle="bold"/>
+            <Button
+                android:id="@+id/button_savings_goal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:text="Add Savings Goal"
+                android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
+                android:textStyle="bold"/>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSavings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="16dp"
+                android:visibility="gone">
 
                 <TextView
-                    android:id="@+id/txtWeeklySavings"
+                    android:id="@+id/txtSavings"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="60dp"
@@ -83,4 +102,17 @@
                     android:textStyle="bold" />
             </androidx.cardview.widget.CardView>
         </LinearLayout>
-    </ScrollView></androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNavigationView"
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="#52A95A"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:itemIconTint="@drawable/nav_icon_selector"
+        app:itemTextColor="@drawable/nav_icon_selector"
+        app:menu="@menu/bottom_nav_menu" />
+</androidx.constraintlayout.widget.ConstraintLayout>
