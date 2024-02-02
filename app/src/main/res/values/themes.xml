@@ -12,6 +12,8 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
+        <item name="android:textColor">@color/black</item>
     </style>
     <style name="SearchViewStyle" parent="Widget.AppCompat.SearchView">
         <!-- Customize the background color -->
@@ -23,5 +25,9 @@
         <!-- Customize the text color of the search input -->
         <item name="android:textColor">@android:color/black</item>
     </style>
+    <style name="TransparentSearchViewStyle" parent="Widget.AppCompat.SearchView">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
 
 </resources>

@@ -1,7 +1,11 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 
@@ -24,12 +28,41 @@ import java.util.List;
 public class FitnessHome extends AppCompatActivity {
 
     private LineChart lineChart;
-    private TextView heightTextView, weightTextView, ageTextView;
+    private TextView heightTextView, weightTextView, ageTextView, nameTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fitness_home);
+
+        Button startBtn = findViewById(R.id.startBtn);
+
+        heightTextView = findViewById(R.id.heightTxt);
+        weightTextView = findViewById(R.id.weightTxt);
+        ageTextView = findViewById(R.id.ageTxt);
+        nameTextView = findViewById(R.id.userName);
+
+        DBHandler dbHandler = new DBHandler(this);
+
+        User newUser = new User();
+        newUser.setName("John Doe");
+        newUser.setAge(25);
+        newUser.setHeight(180.0f);
+        newUser.setWeight(70.0f);
+
+        dbHandler.addUser(newUser.getName(), newUser.getAge(), newUser.getHeight(), newUser.getWeight());
+
+        User user = (User) dbHandler.getUserById(1);
+        if (user != null) {
+            heightTextView.setText(String.valueOf(user.getHeight()) + "cm");
+            weightTextView.setText(String.valueOf(user.getWeight()) + "kg");
+            ageTextView.setText(String.valueOf(user.getAge()) + "yo");
+            nameTextView.setText(String.valueOf(user.getName()));
+        }
+        dbHandler.close();
+
+        Log.d("testing 0: ", user.getName());
+
 
         lineChart = findViewById(R.id.chart);
 
@@ -78,26 +111,16 @@ public class FitnessHome extends AppCompatActivity {
         // Invalidate the chart to refresh
         lineChart.invalidate();
 
-        heightTextView = findViewById(R.id.heightTxt);
-        weightTextView = findViewById(R.id.weightTxt);
-        ageTextView = findViewById(R.id.ageTxt);
+        startBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(FitnessHome.this, WorkoutProgram.class);
+                startActivity(intent);
+            }
+        });
 
-        DBHandler dbHandler = new DBHandler(this);
 
-        User newUser = new User();
-        newUser.setName("John Doe");
-        newUser.setAge(25);
-        newUser.setHeight(180.0f);
-        newUser.setWeight(70.0f);
+        BottomNavigationHelper.setupBottomNavigation(this, R.id.fitness);
 
-        dbHandler.addUser(newUser.getName(), newUser.getAge(), newUser.getHeight(), newUser.getWeight());
-
-        User user = (User) dbHandler.getUserById(1);
-        if (user != null) {
-            heightTextView.setText(String.valueOf(user.getHeight()) + "cm");
-            weightTextView.setText(String.valueOf(user.getWeight()) + "kg");
-            ageTextView.setText(String.valueOf(user.getAge()) + "yo");
-        }
-        dbHandler.close();
     }
 }

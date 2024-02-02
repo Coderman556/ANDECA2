@@ -48,9 +48,11 @@
                 android:layout_margin="12dp">
 
                 <LinearLayout
+                    android:id="@+id/tricepWorkout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/rounded_corner">
+                    android:background="@drawable/rounded_corner"
+                    android:onClick="onClick">
 
                     <ImageView
                         android:id="@+id/imageView2"
@@ -94,7 +96,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/rounded_corner">
+                    android:background="@drawable/rounded_corner"
+                    android:onClick="onClick">
 
                     <ImageView
                         android:id="@+id/imageView3"
@@ -103,7 +106,7 @@
                         app:srcCompat="@drawable/dips" />
 
                     <LinearLayout
-                        android:id="@+id/SquatLinear"
+                        android:id="@+id/squatWorkout"
                         android:layout_width="241dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -138,7 +141,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/rounded_corner">
+                    android:background="@drawable/rounded_corner"
+                    android:onClick="onClick">
 
                     <ImageView
                         android:id="@+id/imageView4"
@@ -147,7 +151,7 @@
                         app:srcCompat="@drawable/push_up" />
 
                     <LinearLayout
-                        android:id="@+id/ChestLinear"
+                        android:id="@+id/chestWorkout"
                         android:layout_width="241dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
@@ -183,7 +187,8 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/rounded_corner">
+                    android:background="@drawable/rounded_corner"
+                    android:onClick="onClick">
 
                     <ImageView
                         android:id="@+id/imageView5"
@@ -192,7 +197,7 @@
                         app:srcCompat="@drawable/situp" />
 
                     <LinearLayout
-                        android:id="@+id/AbsLinear"
+                        android:id="@+id/absWorkout"
                         android:layout_width="241dp"
                         android:layout_height="match_parent"
                         android:orientation="vertical"
