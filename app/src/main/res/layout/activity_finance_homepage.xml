@@ -56,6 +56,7 @@
                 android:onClick="onClick"
                 android:text="Log Expense" />
             <androidx.cardview.widget.CardView
+<<<<<<< HEAD
             android:id="@+id/cvBudget"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -102,6 +103,16 @@
 
                 <TextView
                     android:id="@+id/budget_display_amount"
+=======
+                android:id="@+id/cvBudget"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginVertical="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txtBudget"
+>>>>>>> f4d49c3 (ADD:getDisplayableSnB() in DBHandler.java;INPROG:styling FinanceHomepage;)
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="50dp"
@@ -112,38 +123,62 @@
                     android:textSize="18sp" />
             </LinearLayout>
 
+<<<<<<< HEAD
         </androidx.cardview.widget.CardView>
 
+=======
+>>>>>>> f4d49c3 (ADD:getDisplayableSnB() in DBHandler.java;INPROG:styling FinanceHomepage;)
             <Button
                 android:id="@+id/button_budget_goal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
+<<<<<<< HEAD
                 android:paddingLeft="35dp"
                 android:text="Add Budget Goal"
                 android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
                 android:textStyle="bold"
                 android:onClick="onClick"/>
+=======
+                android:text="Add Budget Goal"
+                android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
+                android:textStyle="bold"/>
+>>>>>>> f4d49c3 (ADD:getDisplayableSnB() in DBHandler.java;INPROG:styling FinanceHomepage;)
             <Button
                 android:id="@+id/button_savings_goal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="visible"
+<<<<<<< HEAD
                 android:paddingLeft="35dp"
                 android:text="Add Savings Goal"
                 android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
                 android:textStyle="bold"
                 android:onClick="onClick"/>
+=======
+                android:text="Add Savings Goal"
+                android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
+                android:textStyle="bold"/>
+
+>>>>>>> f4d49c3 (ADD:getDisplayableSnB() in DBHandler.java;INPROG:styling FinanceHomepage;)
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvSavings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+<<<<<<< HEAD
                 android:layout_marginVertical="10dp"
                 android:visibility="gone"
                 app:cardElevation="4dp"
                 app:cardCornerRadius="4dp">
 
                 <LinearLayout
+=======
+                android:layout_marginVertical="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/txtSavings"
+>>>>>>> f4d49c3 (ADD:getDisplayableSnB() in DBHandler.java;INPROG:styling FinanceHomepage;)
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
