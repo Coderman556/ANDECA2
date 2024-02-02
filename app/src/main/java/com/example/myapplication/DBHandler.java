@@ -298,7 +298,6 @@ public class DBHandler extends SQLiteOpenHelper {
         // No need for db.close() as it's automatically managed by try-with-resources
     }
 
-
     public void deleteFinanceTransaction(int transactionId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(

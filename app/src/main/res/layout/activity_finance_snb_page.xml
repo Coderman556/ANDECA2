@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+z<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:tools="http://schemas.android.com/tools"
 tools:context=".FinanceSnB_page"
@@ -203,25 +203,19 @@ android:padding="16dp">
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_edit_24"
                 android:contentDescription="Edit"
-<<<<<<< HEAD
                 android:background="@android:color/transparent"/>
-=======
-                android:background="transparent"/>
+
         </LinearLayout>
-<<<<<<< HEAD
+
+        <TextView
             android:id="@+id/monthly_display_amount"
-=======
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
             android:text="$15/$30"
             android:textAlignment="center"
             android:textStyle="bold"
-<<<<<<< HEAD
             android:textColor="@color/black"
-=======
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -230,16 +224,11 @@ android:padding="16dp">
 <!--        android:textColor="@color/your_text_color"-->
 
 <Button
-<<<<<<< HEAD
     android:id="@+id/button_monthly"
-=======
-    android:id="@+id/button_monthly_budget"
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:visibility="visible"
     android:text="Monthly Budget"
-<<<<<<< HEAD
     android:paddingLeft="35dp"
     android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
     android:textStyle="bold"
@@ -248,89 +237,4 @@ android:padding="16dp">
 <!--        android:background="@color/your_background_color"-->
 <!--        android:textColor="@color/your_text_color" -->
 
-=======
-    android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
-    android:textStyle="bold"
-    android:textColor="@color/black"/>
-<!--        android:background="@color/your_background_color"-->
-<!--        android:textColor="@color/your_text_color" -->
-
-    <!--
-        =====================================================================
-        -> Savings
-        =====================================================================
-    -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_monthly_savings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="4dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="50dp"
-                    android:layout_weight="1"
-                    android:text="Daily Budget"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textSize="18sp" />
-
-                <ImageButton
-                    android:id="@+id/ebtnMonthlySavings"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    android:contentDescription="Edit"
-                    android:background="transparent"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:text="$15/$30"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-    <!--        android:background="@color/your_background_color"-->
-    <!--        android:textColor="@color/your_text_color"-->
-
-    <Button
-        android:id="@+id/button_monthly_savings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:text="Monthly Budget"
-        android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
-
-
-
-<!--
-    3333333333333333333333333333333333333333333333333333333333333333333
--->
-
-
-
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
 </LinearLayout>
