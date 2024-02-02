@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="15dp"
+    tools:context=".WorkoutProgram"
+    android:background="@drawable/homepagegradient">
+
+    <LinearLayout
+        android:layout_width="409dp"
+        android:layout_height="729dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginBottom="1dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_horizontal"
+                android:layout_margin="25dp">>
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Workout Program"
+                    android:textAlignment="center"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:gravity="center_horizontal"
+                android:layout_margin="12dp">
+
+                <LinearLayout
+                    android:id="@+id/tricepWorkout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_corner"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="61dp"
+                        android:layout_height="63dp"
+                        app:srcCompat="@drawable/dips" />
+
+                    <LinearLayout
+                        android:id="@+id/TricepLinear"
+                        android:layout_width="241dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="25dp">
+
+                        <TextView
+                            android:id="@+id/tricepTxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="3dp"
+                            android:text="Tricep Workout"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tricepTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="• 15 mins"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:gravity="center_horizontal"
+                android:layout_margin="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_corner"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="61dp"
+                        android:layout_height="63dp"
+                        app:srcCompat="@drawable/dips" />
+
+                    <LinearLayout
+                        android:id="@+id/squatWorkout"
+                        android:layout_width="241dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="25dp">
+
+                        <TextView
+                            android:id="@+id/squatTxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="3dp"
+                            android:text="Squat Workout"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/squatTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="• 15 mins"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </TableRow>
+
+            <TableRow
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:gravity="center_horizontal"
+                android:layout_margin="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_corner"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/imageView4"
+                        android:layout_width="61dp"
+                        android:layout_height="63dp"
+                        app:srcCompat="@drawable/push_up" />
+
+                    <LinearLayout
+                        android:id="@+id/chestWorkout"
+                        android:layout_width="241dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="25dp">
+
+                        <TextView
+                            android:id="@+id/chestTxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="3dp"
+                            android:text="Chest Workout"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/chestTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="• 20 mins"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="400dp"
+                android:layout_height="400dp"
+                android:gravity="center_horizontal"
+                android:layout_margin="12dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_corner"
+                    android:onClick="onClick">
+
+                    <ImageView
+                        android:id="@+id/imageView5"
+                        android:layout_width="61dp"
+                        android:layout_height="63dp"
+                        app:srcCompat="@drawable/situp" />
+
+                    <LinearLayout
+                        android:id="@+id/absWorkout"
+                        android:layout_width="241dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingLeft="25dp">
+
+                        <TextView
+                            android:id="@+id/absTxt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingTop="3dp"
+                            android:text="Abs Workout"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/absTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="• 30 mins"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

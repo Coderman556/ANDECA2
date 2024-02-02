@@ -45,7 +45,10 @@ public class BottomNavigationHelper {
 
             case R.id.fitness:
                 // Handle the Fitness icon click
+                activity.startActivity(new Intent(activity, FitnessHome.class));
                 activity.overridePendingTransition(0, 0);
+                activity.finish();
+
                 break;
 
             case R.id.finance:
