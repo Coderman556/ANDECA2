@@ -13,14 +13,31 @@
         android:theme="@style/Theme.MyApplication"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".WorkoutActivity"
+=======
+            android:name=".NotesNewTask"
+>>>>>>> 22cd20757925deb3bbbb953d3fecf3cc32b97e8c
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
+<<<<<<< HEAD
             android:name=".ExerciseActivity"
+=======
+            android:name=".SplashScreen"
+            android:exported="false"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".NoteNew"
+>>>>>>> 22cd20757925deb3bbbb953d3fecf3cc32b97e8c
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
