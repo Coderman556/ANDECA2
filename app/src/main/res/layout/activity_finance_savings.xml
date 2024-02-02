@@ -1,24 +1,22 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-tools:context=".FinanceSnB_page"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-android:padding="16dp">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".FinanceSaving"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
 
 <!--
     =====================================================================
-    1. Daily
+    1. Daily Budget
     =====================================================================
 -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/card_daily_display"
+        android:id="@+id/card_daily_savings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        android:layout_marginVertical="10dp"
         app:cardElevation="4dp"
         app:cardCornerRadius="4dp">
 
@@ -34,264 +32,18 @@ android:padding="16dp">
                 >
 
                 <TextView
-                    android:id="@+id/card_daily_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginBottom="50dp"
-                    android:layout_marginLeft="35dp"
                     android:layout_weight="1"
-                    android:text="Daily Savings"
+                    android:text="Daily Budget"
                     android:textStyle="bold"
-                    android:textColor="@color/black"
                     android:gravity="center"
                     android:textSize="18sp" />
 
                 <ImageButton
                     android:id="@+id/ebtnDaily"
-                    android:onClick="onClick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    android:contentDescription="Edit"
-                    android:background="@android:color/transparent"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/daily_display_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:text="30"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/button_daily"
-        android:layout_width="match_parent"
-        android:onClick="onClick"
-        android:layout_height="wrap_content"
-        android:paddingLeft="35dp"
-        android:visibility="visible"
-        android:text="Daily Savings"
-        android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
-        android:textStyle="bold"
-        android:textColor="@color/black"/><!--
-    =====================================================================
-    2. Weekly
-    =====================================================================
--->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_weekly_display"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="10dp"
-        android:visibility="gone"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="4dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:id="@+id/card_weekly_text"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="50dp"
-                    android:layout_marginLeft="35dp"
-                    android:layout_weight="1"
-                    android:text="Daily Budget"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:gravity="center"
-                    android:textSize="18sp" />
-
-                <ImageButton
-                    android:id="@+id/ebtnWeekly"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_baseline_edit_24"
-                    android:contentDescription="Edit"
-                    android:background="@android:color/transparent"
-                    android:onClick="onClick"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/weekly_display_amount"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="50dp"
-                android:text="$15/$30"
-                android:textAlignment="center"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <Button
-        android:id="@+id/button_weekly"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:paddingLeft="35dp"
-        android:text="Weekly Savings"
-        android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
-        android:textStyle="bold"
-        android:onClick="onClick"
-        android:textColor="@color/black"/>
-<!--
-    =====================================================================
-    3. Monthly
-    =====================================================================
--->
-<androidx.cardview.widget.CardView
-    android:id="@+id/card_monthly_display"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:visibility="gone"
-    android:layout_marginVertical="10dp"
-    app:cardElevation="4dp"
-    app:cardCornerRadius="4dp">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
-
-            <TextView
-                android:id="@+id/card_monthly_text"
-                android:layout_width="0dp"
-                android:layout_marginLeft="35dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="50dp"
-                android:layout_weight="1"
-                android:text="Daily Budget"
-                android:textStyle="bold"
-                android:textColor="@color/black"
-                android:gravity="center"
-                android:textSize="18sp" />
-
-            <ImageButton
-                android:id="@+id/ebtnMonthly"
-                android:onClick="onClick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_baseline_edit_24"
-                android:contentDescription="Edit"
-<<<<<<< HEAD
-                android:background="@android:color/transparent"/>
-=======
-                android:background="transparent"/>
-        </LinearLayout>
-<<<<<<< HEAD
-            android:id="@+id/monthly_display_amount"
-=======
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
-            android:text="$15/$30"
-            android:textAlignment="center"
-            android:textStyle="bold"
-<<<<<<< HEAD
-            android:textColor="@color/black"
-=======
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
-            android:textSize="18sp" />
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
-<!--        android:background="@color/your_background_color"-->
-<!--        android:textColor="@color/your_text_color"-->
-
-<Button
-<<<<<<< HEAD
-    android:id="@+id/button_monthly"
-=======
-    android:id="@+id/button_monthly_budget"
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:visibility="visible"
-    android:text="Monthly Budget"
-<<<<<<< HEAD
-    android:paddingLeft="35dp"
-    android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
-    android:textStyle="bold"
-    android:textColor="@color/black"
-    android:onClick="onClick"/>
-<!--        android:background="@color/your_background_color"-->
-<!--        android:textColor="@color/your_text_color" -->
-
-=======
-    android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
-    android:textStyle="bold"
-    android:textColor="@color/black"/>
-<!--        android:background="@color/your_background_color"-->
-<!--        android:textColor="@color/your_text_color" -->
-
-    <!--
-        =====================================================================
-        -> Savings
-        =====================================================================
-    -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/card_monthly_savings"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        app:cardElevation="4dp"
-        app:cardCornerRadius="4dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal"
-                >
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="50dp"
-                    android:layout_weight="1"
-                    android:text="Daily Budget"
-                    android:textStyle="bold"
-                    android:gravity="center"
-                    android:textSize="18sp" />
-
-                <ImageButton
-                    android:id="@+id/ebtnMonthlySavings"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_edit_24"
@@ -311,18 +63,157 @@ android:padding="16dp">
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-    <!--        android:background="@color/your_background_color"-->
-    <!--        android:textColor="@color/your_text_color"-->
 
-    <Button
-        android:id="@+id/button_monthly_savings"
+
+
+<!--
+    111111111111111111111111111111111111111111111111111111111111111111111
+-->
+
+
+<!--
+    =====================================================================
+    2. Weekly Budget
+    =====================================================================
+-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_weekly_budget"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
+        android:visibility="gone"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="50dp"
+                    android:layout_weight="1"
+                    android:text="Daily Budget"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:id="@+id/ebtnWeekly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_edit_24"
+                    android:contentDescription="Edit"
+                    android:background="transparent"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:text="$15/$30"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <Button
+        android:id="@+id/button_weekly_budget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:text="Weekly Budget"
+        android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
+        android:textStyle="bold"/>
+
+
+
+<!--
+    222222222222222222222222222222222222222222222222222222222222222222222
+-->
+
+
+<!--
+    =====================================================================
+    3. Monthly Budget
+    =====================================================================
+-->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_monthly_budget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:cardElevation="4dp"
+        app:cardCornerRadius="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="50dp"
+                    android:layout_weight="1"
+                    android:text="Daily Budget"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:textSize="18sp" />
+
+                <ImageButton
+                    android:id="@+id/ebtnMonthly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_edit_24"
+                    android:contentDescription="Edit"
+                    android:background="transparent"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="50dp"
+                android:text="$15/$30"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+<!--        android:background="@color/your_background_color"-->
+<!--        android:textColor="@color/your_text_color"-->
+
+    <Button
+        android:id="@+id/button_monthly_budget"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
         android:text="Monthly Budget"
         android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
         android:textStyle="bold"
         android:textColor="@color/black"/>
+<!--        android:background="@color/your_background_color"-->
+<!--        android:textColor="@color/your_text_color" -->
 
 
 
@@ -331,6 +222,4 @@ android:padding="16dp">
 -->
 
 
-
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
 </LinearLayout>

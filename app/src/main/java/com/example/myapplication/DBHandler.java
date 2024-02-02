@@ -276,8 +276,6 @@ public class DBHandler extends SQLiteOpenHelper {
         return transactionsList;
     }
 
-
-
     public int updateFinanceTransaction(FinanceTransaction transaction) {
         // Try-with-resources statement automatically closes the database object
         try (SQLiteDatabase db = this.getWritableDatabase()) {
