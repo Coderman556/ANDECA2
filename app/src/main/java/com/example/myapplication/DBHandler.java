@@ -298,6 +298,31 @@ public class DBHandler extends SQLiteOpenHelper {
         // No need for db.close() as it's automatically managed by try-with-resources
     }
 
+
+
+    public int updateFinanceTransaction(FinanceTransaction transaction) {
+        // Try-with-resources statement automatically closes the database object
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+
+            values.put(TRANSACTION_CATEGORY, transaction.getCategory());
+            values.put(TRANSACTION_DESCRIPTION, transaction.getDescription());
+            values.put(TRANSACTION_PRICE, transaction.getPrice());
+
+            // Update the database and get the number of rows affected
+            int count = db.update(
+                    TABLE_TRANSACTIONS,
+                    values,
+                    TRANSACTION_ID + " = ?",
+                    new String[] { String.valueOf(transaction.getId()) }
+            );
+
+            return count;
+        }
+        // No need for db.close() as it's automatically managed by try-with-resources
+    }
+
+
     public void deleteFinanceTransaction(int transactionId) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(
