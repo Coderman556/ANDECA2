@@ -1,15 +1,24 @@
 package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.ImageButton;
+import android.widget.Toast;
+import android.graphics.Color;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
@@ -20,22 +29,20 @@ import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
+public class FinanceOverview extends AppCompatActivity implements FinanceTransactionDialog.FinanceTransactionDialogListener, View.OnClickListener {
 
-public class FinanceHomepage extends AppCompatActivity implements View.OnClickListener{
+
 
     private DBHandler db;
+    private RecyclerView mRecyclerView;
+    private ArrayList<FinanceTransaction> mTransactions =  new ArrayList<FinanceTransaction>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finance_homepage);
-
-        List<FinanceTransaction> transactionsList = new ArrayList<>();
+        setContentView(R.layout.activity_finance_overview);
+        RecyclerView recyclerView = findViewById(R.id.recentRecyclerView);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
         db = new DBHandler(this);
 //        editButton = findViewById(R.id.editButton); // on recyclerItem onClick
 
@@ -110,96 +117,82 @@ public class FinanceHomepage extends AppCompatActivity implements View.OnClickLi
         barChart.setData(barData);
         barChart.invalidate(); // Refresh the chart
 
-        List<FinanceSnB> SnBList = db.getDisplayableSnB();
-        for (FinanceSnB snb : SnBList) {
-//            TODO: inflate CardView/Button with relevant data.
-            if (snb.getGoalType().equals("saving")) {
-                Button button = findViewById(R.id.button_savings_goal);
-                button.setVisibility(View.GONE);
+//        ######################################################################
 
-                CardView cardview = findViewById(R.id.cvSavings);
-                cardview.setVisibility(View.VISIBLE);
+//TODO: instead of bindCountriesData, call getAll and iterate through resultant list using for loop
 
-                TextView title = findViewById(R.id.txtSavings);
-                title.setText(snb.getGoalPeriod() + " " + snb.getGoalType());
-            }
-            if (snb.getGoalType().equals("budget")){
-                Button button = findViewById(R.id.button_savings_goal);
-                button.setVisibility(View.GONE);
+        mTransactions = db.getAllFinanceTransactions();
+        setUIRef();
+    }
 
-                CardView cardview = findViewById(R.id.cvBudget);
-                cardview.setVisibility(View.VISIBLE);
-//                TODO: change the data displayed programmatically depending on what the get method returns.
+    private void setUIRef() {
+        mRecyclerView = findViewById(R.id.recentRecyclerView);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, RecyclerView.VERTICAL, false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
-                TextView title = findViewById(R.id.txtBudget);
-                title.setText(snb.getGoalPeriod() + " " + snb.getGoalType());
-            }
+        FinanceTransactionAdapter myAdapter = new FinanceTransactionAdapter(mTransactions, transaction -> {
+            // Recycler item click opens the dialog for editing
+            showFinanceTransactionDialog(transaction, false); // 'false' for edit
+        });
+        mRecyclerView.setAdapter(myAdapter);
+    }
+
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog, FinanceTransaction transaction, boolean isNew) {
+        if (isNew) {
+            // Add the new transaction to the database
+            db.addFinanceTransaction(transaction);
+        } else {
+            // Update the existing transaction in the database
+            db.updateFinanceTransaction(transaction);
         }
-        BottomNavigationHelper.setupBottomNavigation(this, R.id.finance);
-        updateUI();
+        // Refresh the UI to reflect changes
+        refreshTransactions();
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        updateUI();
+    public void onDialogNegativeClick(DialogFragment dialog) {
+        // Handle the case where the user cancels the dialog
     }
 
-    public void updateUI() {
-        List<FinanceSnB> displayableSnBs = db.getDisplayableSnB();
+    @Override
+    public void onDialogDeleteClick(DialogFragment dialog, FinanceTransaction transaction) {
+        if (transaction != null) {
+            // Perform the delete operation
+            db.deleteFinanceTransaction(transaction.getId());
 
-        // Update the UI for each goal type
-        updateUIForGoalType(displayableSnBs, "saving", R.id.button_savings_goal, R.id.cvSavings, R.id.txtSavings, R.id.savings_display_amount);
-        updateUIForGoalType(displayableSnBs, "budget", R.id.button_budget_goal, R.id.cvBudget, R.id.txtBudget, R.id.budget_display_amount);
-    }
+            // Refresh the UI (e.g., by reloading the data for the RecyclerView)
+            refreshTransactions();
 
-    private void updateUIForGoalType(List<FinanceSnB> snbs, String goalType, int buttonId, int cardViewId, int textViewId, int amountTextViewId) {
-        Button button = findViewById(buttonId);
-        CardView cardView = findViewById(cardViewId);
-        TextView textView = findViewById(textViewId);
-        TextView amountTextView = findViewById(amountTextViewId); // Amount TextView
-
-        for (FinanceSnB snb : snbs) {
-            if (snb.getGoalType().equalsIgnoreCase(goalType)) {
-                // Data is present for this goal type, show the card view
-                button.setVisibility(View.GONE);
-                cardView.setVisibility(View.VISIBLE);
-                textView.setText(snb.getGoalPeriod() + " " + snb.getGoalType());
-                amountTextView.setText("$" + String.format(Locale.getDefault(), "%.2f", snb.getGoalAmount())); // Format the amount to 2 decimal places
-
-                return; // We found the data, no need to check further
-            }
+            // Optionally, show a confirmation message
+            Toast.makeText(this, "Transaction deleted", Toast.LENGTH_SHORT).show();
         }
-        // No data is present for this goal type, show the button
-        cardView.setVisibility(View.GONE);
-        button.setVisibility(View.VISIBLE);
     }
 
 
+    public void showFinanceTransactionDialog(FinanceTransaction transaction, boolean isNew) {
+        FinanceTransactionDialog dialogFragment = FinanceTransactionDialog.newInstance(transaction, isNew);
+        dialogFragment.show(getSupportFragmentManager(), "FinanceTransactionDialog");
+    }
 
+
+    private void refreshTransactions() {
+        // Reload transactions from the database and update the RecyclerView
+        mTransactions.clear();
+        mTransactions.addAll(db.getAllFinanceTransactions());
+        mRecyclerView.getAdapter().notifyDataSetChanged();
+    }
 
     @Override
     public void onClick(View v) {
-        int id = v.getId();
-//      TODO: create a cardview to display budget and savings & map the onClick
-        if (id == R.id.button_budget_goal) {
-          Intent i = new Intent(this, FinanceSnB_page.class);
-          i.putExtra("DataToView", "budget");
-          startActivity(i);
-        } else if (id == R.id.button_savings_goal) {
-            Intent i = new Intent(this, FinanceSnB_page.class);
-            i.putExtra("DataToView", "saving");
-            startActivity(i);
-        } else if (id == R.id.btnLogExpense) {
-//            TODO: Redirect to create log expense activity
-//            Intent i = new Intent(this, );
-//            startActivity(i);
-        } else if (id == R.id.cvSpendings) {
-            Intent i = new Intent(this, FinanceOverview.class);
+        if (v.getId() == R.id.imageButton) {
+            // Plus icon clicked, open dialog for adding a new transaction
+            showFinanceTransactionDialog(new FinanceTransaction(), true); // 'true' for new transaction
+        } else if (v.getId() == R.id.searchTransaction) {
+            Intent i = new Intent(this, FinanceViewAllTransactions.class);
             startActivity(i);
         }
-//        TODO: Link edit button in CardView to SnBDetails page
     }
-
 
 }

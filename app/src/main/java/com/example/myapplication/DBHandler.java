@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 import android.view.SurfaceControl;
 
 import java.util.ArrayList;
@@ -37,8 +38,8 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(
                 "CREATE TABLE " + TABLE_TRANSACTIONS + "("
-                + TRANSACTION_ID + " INTEGER PRIMARY KEY," + TRANSACTION_CATEGORY + " TEXT,"
-                + TRANSACTION_PRICE + " REAL" + TRANSACTION_DESCRIPTION + "TEXT" + ")"
+                + TRANSACTION_ID + " INTEGER PRIMARY KEY, " + TRANSACTION_CATEGORY + " TEXT,"
+                + TRANSACTION_PRICE + " REAL," + TRANSACTION_DESCRIPTION + " TEXT" + ");"
         );
         db.execSQL(
                 "CREATE TABLE " + TABLE_SAVINGSANDBUDGETS + "("
@@ -76,21 +77,15 @@ public class DBHandler extends SQLiteOpenHelper {
     public List<FinanceSnB> getDisplayableSnB(){
         List<FinanceSnB> SnBList = new ArrayList<>();
 
-        String selectQuery = "SELECT " + SNB_GOALTYPE + ", MIN(periodOrder) as MinPeriodOrder "
-                + "FROM ( "
-                + "SELECT "
-                + TABLE_SAVINGSANDBUDGETS + "." + SNB_GOALTYPE + ", "
-                + "CASE " + SNB_GOALPERIOD + " "
+        String selectQuery = "SELECT " + SNB_GOALTYPE + ", " + SNB_GOALPERIOD + ", " + SNB_GOALAMOUNT + " "
+                + "FROM " + TABLE_SAVINGSANDBUDGETS + " "
+                + "WHERE " + SNB_GOALAMOUNT + " <> 0 "
+                + "ORDER BY CASE " + SNB_GOALPERIOD + " "
                 + "WHEN 'daily' THEN 1 "
                 + "WHEN 'weekly' THEN 2 "
                 + "WHEN 'monthly' THEN 3 "
-                + "ELSE 4 "
-                + "END as periodOrder "
-                + "FROM " + TABLE_SAVINGSANDBUDGETS + " "
-                + "WHERE " + SNB_GOALAMOUNT + " <> 0 "
-                + ") AS orderedSavings "
-                + "GROUP BY " + SNB_GOALTYPE + " "
-                + "ORDER BY MinPeriodOrder;";
+                + "ELSE 4 END, "
+                + SNB_GOALTYPE;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -98,11 +93,10 @@ public class DBHandler extends SQLiteOpenHelper {
             if (cursor.moveToFirst()) {
                 do {
                     FinanceSnB SnB = new FinanceSnB();
-
                     SnB.setGoalType(cursor.getString(0));
                     SnB.setGoalPeriod(cursor.getString(1));
-                    SnB.setGoalAmount(Double.parseDouble(cursor.getString(2)));
-
+                    SnB.setGoalAmount(cursor.getDouble(2));
+                    SnBList.add(SnB);
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -118,37 +112,87 @@ public class DBHandler extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
-        if (cursor != null) {
             if (cursor.moveToFirst()) {
                 do {
                     FinanceSnB SnB = new FinanceSnB();
 
                     SnB.setGoalType(cursor.getString(0));
                     SnB.setGoalPeriod(cursor.getString(1));
-                    SnB.setGoalAmount(Double.parseDouble(cursor.getString(2)));
+                    SnB.setGoalAmount(cursor.getDouble(2));
 
+                    SnBList.add(SnB);
                 } while (cursor.moveToNext());
             }
+        if (!cursor.isClosed())
             cursor.close();
-        }
 
         db.close();
         return SnBList;
     }
 
-    public long addFinanceTransaction(FinanceTransaction transaction) {
+
+
+    public int updateSnB(FinanceSnB snb) {
         SQLiteDatabase db = this.getWritableDatabase();
+
         ContentValues values = new ContentValues();
+        values.put(SNB_GOALTYPE, snb.getGoalType());
+        values.put(SNB_GOALPERIOD, snb.getGoalPeriod());
+        values.put(SNB_GOALAMOUNT, snb.getGoalAmount());
 
-        values.put(TRANSACTION_CATEGORY, transaction.getCategory());
-        values.put(TRANSACTION_DESCRIPTION, transaction.getDescription());
-        values.put(TRANSACTION_PRICE, transaction.getPrice());
+        // Assuming you have a unique ID (like a primary key) to identify the row to update
+        // If your table uses the goalType and goalPeriod as a composite primary key, then your where clause should match both
+        String selection = SNB_GOALTYPE + " = ? AND " + SNB_GOALPERIOD + " = ?";
+        String[] selectionArgs = { snb.getGoalType(), snb.getGoalPeriod() };
 
-        long newRowId = db.insert(TABLE_TRANSACTIONS, null, values);
+        int count = db.update(
+                TABLE_SAVINGSANDBUDGETS,
+                values,
+                selection,
+                selectionArgs);
+
+        if (count == 1) {
+            Log.d("DBHandler", "SnB updated successfully.");
+        } else {
+            Log.e("DBHandler", "SnB update failed.");
+        }
+
         db.close();
-
-        return newRowId;
+        return count;
     }
+
+    public int deleteSnB(String goalType, String goalPeriod) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Define 'where' part of query.
+        String selection = SNB_GOALTYPE + " = ? AND " + SNB_GOALPERIOD + " = ?";
+        // Specify arguments in placeholder order.
+        String[] selectionArgs = { goalType, goalPeriod };
+
+        // Issue SQL statement.
+        int deletedRows = db.delete(TABLE_SAVINGSANDBUDGETS, selection, selectionArgs);
+
+        db.close();
+        return deletedRows;
+    }
+
+    public long addFinanceTransaction(FinanceTransaction transaction) {
+        // Try-with-resources statement automatically closes the database object
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+
+            values.put(TRANSACTION_CATEGORY, transaction.getCategory());
+            values.put(TRANSACTION_DESCRIPTION, transaction.getDescription());
+            values.put(TRANSACTION_PRICE, transaction.getPrice());
+
+            // Insert the new row, returning the primary key value of the new row
+            long newRowId = db.insert(TABLE_TRANSACTIONS, null, values);
+
+            return newRowId;
+        }
+        // No need for db.close() as it's automatically managed by try-with-resources
+    }
+
 
     public FinanceTransaction getFinanceTransaction(int transactionId) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -179,50 +223,83 @@ public class DBHandler extends SQLiteOpenHelper {
         return txn;
     }
 
-    public List<FinanceTransaction> getAllFinanceTransactions() {
+    public List<FinanceTransaction> searchFinanceTransactions(String searchText) {
         List<FinanceTransaction> transactionsList = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_TRANSACTIONS;
+        SQLiteDatabase db = this.getReadableDatabase();
 
-        SQLiteDatabase db = this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(selectQuery, null);
+        String query = "SELECT * FROM " + TABLE_TRANSACTIONS +
+                " WHERE " + TRANSACTION_CATEGORY + " LIKE ? OR " +
+                TRANSACTION_DESCRIPTION + " LIKE ?";
+        String[] args = new String[]{"%" + searchText + "%", "%" + searchText + "%"};
 
-        if (cursor != null) {
-            if (cursor.moveToFirst()) {
-                do {
+        Cursor cursor = db.rawQuery(query, args);
 
-                    FinanceTransaction transaction = new FinanceTransaction();
+        if (cursor.moveToFirst()) {
+            do {
+                FinanceTransaction transaction = new FinanceTransaction();
+                transaction.setId(cursor.getInt(0)); // TRANSACTION_ID
+                transaction.setCategory(cursor.getString(1)); // TRANSACTION_CATEGORY
+                transaction.setPrice(cursor.getDouble(2)); // TRANSACTION_PRICE
+                transaction.setDescription(cursor.getString(3)); // TRANSACTION_DESCRIPTION
 
-                    transaction.setId(Integer.parseInt(cursor.getString(0)));
-                    transaction.setCategory(cursor.getString(1));
-                    transaction.setPrice(Double.parseDouble(cursor.getString(2)));
-                    transaction.setDescription(cursor.getString(3));
-
-
-                    transactionsList.add(transaction);
-                } while (cursor.moveToNext());
-            }
-            cursor.close();
+                transactionsList.add(transaction);
+            } while (cursor.moveToNext());
         }
-
+        cursor.close();
         db.close();
+
         return transactionsList;
     }
 
-    public int updateFinanceTransaction(FinanceTransaction transaction) {
+    public ArrayList<FinanceTransaction> getAllFinanceTransactions() {
+        ArrayList<FinanceTransaction> transactionsList = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(TRANSACTION_CATEGORY, transaction.getCategory());
-        values.put(TRANSACTION_DESCRIPTION, transaction.getDescription());
-        values.put(TRANSACTION_PRICE, transaction.getPrice());
-
-        return db.update(
-                TABLE_TRANSACTIONS,
-                values,
-                TRANSACTION_ID + " = ?",
-                new String[] { String.valueOf(transaction.getId()) }
-        );
+        Cursor cursor = null;
+        try {
+            cursor = db.rawQuery("SELECT * FROM " + TABLE_TRANSACTIONS, null);
+            if (cursor.moveToFirst()) {
+                do {
+                    FinanceTransaction transaction = new FinanceTransaction();
+                    transaction.setId(cursor.getInt(0)); // TRANSACTION_ID
+                    transaction.setCategory(cursor.getString(1)); // TRANSACTION_CATEGORY
+                    transaction.setPrice(cursor.getDouble(2)); // TRANSACTION_PRICE
+                    transaction.setDescription(cursor.getString(3)); // TRANSACTION_DESCRIPTION
+                    transactionsList.add(transaction);
+                } while (cursor.moveToNext());
+            }
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+            db.close();
+        }
+        return transactionsList;
     }
+
+
+
+    public int updateFinanceTransaction(FinanceTransaction transaction) {
+        // Try-with-resources statement automatically closes the database object
+        try (SQLiteDatabase db = this.getWritableDatabase()) {
+            ContentValues values = new ContentValues();
+
+            values.put(TRANSACTION_CATEGORY, transaction.getCategory());
+            values.put(TRANSACTION_DESCRIPTION, transaction.getDescription());
+            values.put(TRANSACTION_PRICE, transaction.getPrice());
+
+            // Update the database and get the number of rows affected
+            int count = db.update(
+                    TABLE_TRANSACTIONS,
+                    values,
+                    TRANSACTION_ID + " = ?",
+                    new String[] { String.valueOf(transaction.getId()) }
+            );
+
+            return count;
+        }
+        // No need for db.close() as it's automatically managed by try-with-resources
+    }
+
 
     public void deleteFinanceTransaction(int transactionId) {
         SQLiteDatabase db = this.getWritableDatabase();
