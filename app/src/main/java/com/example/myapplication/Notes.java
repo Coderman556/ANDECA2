@@ -46,8 +46,8 @@ public class Notes extends AppCompatActivity {
         recentRecyclerView.setLayoutManager(layoutManager);
 
 // Set up your RecyclerView adapter and populate data accordingly
-        RecentAdapter adapter = new RecentAdapter(/* pass your data here */);
-        recentRecyclerView.setAdapter(adapter);
+//        RecentAdapter adapter = new RecentAdapter(/* pass your data here */);
+//        recentRecyclerView.setAdapter(adapter);
 
 
         BottomNavigationHelper.setupBottomNavigation(this, R.id.notes);
