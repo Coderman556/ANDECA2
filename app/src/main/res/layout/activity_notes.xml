@@ -1,10 +1,11 @@
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".Notes">
 
     <ImageView
         android:id="@+id/backgroundImageView"
@@ -13,112 +14,70 @@
         android:scaleType="centerCrop"
         android:src="@drawable/homepagegradient"
         />
-    <RelativeLayout
-        android:id="@+id/titleSearchLayout"
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="1dp"
-        android:layout_marginBottom="1dp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        android:minHeight="?actionBarSize"
+        android:theme="?actionBarTheme"
+        android:background="@color/green">
 
         <TextView
-            android:id="@+id/titleTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="My Tasks and Notes"
-            android:textSize="25sp"
+            android:text="My Notes"
+            android:textSize="24sp"
+            android:textColor="@color/white"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginRight="60dp"
-            />
+/>
 
-        <androidx.appcompat.widget.SearchView
-            android:id="@+id/searchView"
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="55sp"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/titleTextView"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="16dp"/>
-    </RelativeLayout>
+            android:text="+"
+            android:textSize="35sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:layout_gravity="end"
+            android:onClick="newNote"/>
+
+    </androidx.appcompat.widget.Toolbar>
 
     <LinearLayout
         android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/titleSearchLayout">
+        android:layout_below="@+id/toolBar"
+        android:layout_marginTop="10dp"
+        >
 
         <CalendarView
             android:id="@+id/calendarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_calendar_background"/>
+            android:background="@drawable/rounded_calendar_background"
+            />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/recentSectionLayout"
+    <ListView
+        android:id="@+id/noteListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/calendarLayout">
-
-        <!-- Linear layout for section title -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="start"
-            android:paddingEnd="8dp">
-
-            <!-- Title -->
-            <TextView
-                android:id="@+id/recentTitleTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Recent Notes"
-                android:textSize="19sp"
-                android:textStyle="bold"
-                android:textColor="@android:color/black"
-                android:layout_marginLeft="20dp"
-                android:layout_gravity="start" />
-        </LinearLayout>
-
-        <!-- HorizontalScrollView for RecyclerView -->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="8dp"
-            android:paddingBottom="8dp">
-
-            <RecyclerView
-                android:id="@+id/recentRecyclerView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/recentTitleTextView"
-                app:layout_constraintBottom_toBottomOf="@+id/recentSectionLayout"/>
-        </HorizontalScrollView>
-    </LinearLayout>
-
+        android:layout_height="match_parent"
+        android:layout_below="@+id/calendarLayout"
+        android:layout_marginTop="3dp"
+        android:dividerHeight="3dp"
+        android:divider="@color/black"
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
         android:layout_height="75dp"
         android:background="#52A95A"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:itemIconTint="@drawable/nav_icon_selector"
-        app:itemTextColor="@drawable/nav_icon_selector"
-        app:menu="@menu/bottom_nav_menu" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_alignParentBottom="true"
+    app:itemIconTint="@drawable/nav_icon_selector"
+    app:itemTextColor="@drawable/nav_icon_selector"
+    app:menu="@menu/bottom_nav_menu"/>
+
+</RelativeLayout>
