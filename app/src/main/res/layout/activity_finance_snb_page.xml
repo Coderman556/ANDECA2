@@ -55,7 +55,7 @@ android:padding="16dp">
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_edit_24"
                 android:contentDescription="Edit"
-                android:background="transparent"/>
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
 
@@ -121,7 +121,7 @@ android:padding="16dp">
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_edit_24"
                     android:contentDescription="Edit"
-                    android:background="transparent"/>
+                    android:background="@android:color/transparent"/>
 
             </LinearLayout>
 
@@ -201,7 +201,7 @@ android:padding="16dp">
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_edit_24"
                 android:contentDescription="Edit"
-                android:background="transparent"/>
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
 
@@ -267,7 +267,7 @@ android:padding="16dp">
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_edit_24"
                     android:contentDescription="Edit"
-                    android:background="transparent"/>
+                    android:background="@android:color/transparent"/>
 
             </LinearLayout>
 
@@ -347,7 +347,7 @@ android:padding="16dp">
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_baseline_edit_24"
                 android:contentDescription="Edit"
-                android:background="transparent"/>
+                android:background="@android:color/transparent"/>
 
         </LinearLayout>
 
@@ -418,7 +418,7 @@ android:padding="16dp">
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_baseline_edit_24"
                     android:contentDescription="Edit"
-                    android:background="transparent"/>
+                    android:background="@android:color/transparent"/>
 
             </LinearLayout>
 

@@ -47,6 +47,7 @@
                 android:id="@+id/btnLogExpense"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:onClick="onClick"
                 android:text="Log Expense" />
 
             <androidx.cardview.widget.CardView
@@ -74,7 +75,8 @@
                 android:visibility="visible"
                 android:text="Add Budget Goal"
                 android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:onClick="onClick"/>
             <Button
                 android:id="@+id/button_savings_goal"
                 android:layout_width="match_parent"
@@ -82,7 +84,8 @@
                 android:visibility="visible"
                 android:text="Add Savings Goal"
                 android:drawableEnd="@drawable/ic_baseline_add_circle_outline_24"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:onClick="onClick"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvSavings"

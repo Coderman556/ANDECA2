@@ -13,25 +13,17 @@
         android:theme="@style/Theme.Design.NoActionBar"
         tools:targetApi="31">
         <activity
-<<<<<<< HEAD
+            android:name=".FinanceSnBDetails"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+
             android:name=".Notes"
-=======
             android:name=".FinanceSnB_page"
->>>>>>> e9ee4dc (TBH: my biggest commit, lost track of what I've done;)
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".FinanceBudget"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".FinanceSaving"
+
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
