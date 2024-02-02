@@ -8,12 +8,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
 import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.RecyclerView;
+
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -31,7 +38,7 @@ public class MainActivity extends AppCompatActivity{
 
         TextView greetingTextView = findViewById(R.id.greetingTextView);
 
-        // Determine the time of day and set the greeting
+
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
 
@@ -73,6 +80,10 @@ public class MainActivity extends AppCompatActivity{
                 }
             }
         });
+
+
+
+
         BottomNavigationHelper.setupBottomNavigation(this, R.id.home);
 
     }

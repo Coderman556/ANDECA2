@@ -46,12 +46,10 @@ public class BottomNavigationHelper {
             case R.id.fitness:
                 // Handle the Fitness icon click
                 activity.overridePendingTransition(0, 0);
-
                 break;
 
             case R.id.finance:
                 // Handle the Finance icon click
-
                 break;
         }
     }
